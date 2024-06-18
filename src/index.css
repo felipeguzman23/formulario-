@@ -1,0 +1,38 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+body {
+  margin: 0; /* Elimina el margen predeterminado */
+  padding: 0; /* Elimina el relleno predeterminado */
+  background-image: url('https://media.istockphoto.com/id/1162692500/es/foto/carretera-urbana.jpg?s=2048x2048&w=is&k=20&c=up-dlE_JqMqPXk_KGHKZWLSpbLb-sAVhQN6xUADAXjk='); /* Ruta relativa a la imagen en tu proyecto */
+  background-size: cover; /* Cubrir toda el área del cuerpo */
+  background-position: center; /* Centrar la imagen */
+  background-repeat: no-repeat; /* No repetir la imagen */
+}
+
+.form-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* 100% del alto de la ventana */
+  
+}
+
+.form-container {
+  background-color: #ffffff; /* Color de fondo para el contenedor del formulario */
+  border: 2px solid #000000; /* Grosor y color del borde */
+  border-radius: 8px; /* Radio de borde para esquinas redondeadas */
+  padding: 20px; /* Relleno interno */
+  max-width: 400px; /* Ancho máximo del contenedor del formulario */
+}
+
