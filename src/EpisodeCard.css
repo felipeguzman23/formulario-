@@ -1,0 +1,17 @@
+.episode-card {
+  background: rgba(44, 62, 80, 0.9);
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.episode-info {
+  text-align: left;
+}
+
+.character-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}

@@ -1,91 +1,77 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-function Form({ onFormSubmit }) {
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    gender: '',
-    birthDate: ''
-  });
+function Form({ onFormSubmitCharacter, onFormSubmitEpisode }) {
+  const [searchCharacter, setSearchCharacter] = useState('');
+  const [searchEpisode, setSearchEpisode] = useState('');
+  const [episodes, setEpisodes] = useState([]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
+  useEffect(() => {
+    const fetchEpisodes = async () => {
+      try {
+        const response = await axios.get('https://rickandmortyapi.com/api/episode');
+        setEpisodes(response.data.results);
+      } catch (error) {
+        console.error('Error fetching episodes:', error);
+      }
+    };
+    fetchEpisodes();
+  }, []);
+
+  const handleCharacterChange = (e) => {
+    setSearchCharacter(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleEpisodeChange = (e) => {
+    setSearchEpisode(e.target.value);
+  };
+
+  const handleCharacterSubmit = (e) => {
     e.preventDefault();
-    // Llama a la función onFormSubmit que enviará los datos al App.js
-    onFormSubmit(formData);
-    // Muestra un mensaje de alerta y resetea el formulario
-    alert('Formulario enviado correctamente');
-    setFormData({
-      firstName: '',
-      lastName: '',
-      gender: '',
-      birthDate: ''
-    });
+    onFormSubmitCharacter(searchCharacter);
+  };
+
+  const handleEpisodeSubmit = (e) => {
+    e.preventDefault();
+    onFormSubmitEpisode(searchEpisode);
   };
 
   return (
     <div className="container mt-5">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleCharacterSubmit}>
         <div className="mb-3">
-          <label htmlFor="firstName" className="form-label">Nombre</label>
+          <label htmlFor="searchCharacter" className="form-label">Buscar Personaje</label>
           <input
             type="text"
             className="form-control"
-            id="firstName"
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleChange}
+            id="searchCharacter"
+            name="searchCharacter"
+            value={searchCharacter}
+            onChange={handleCharacterChange}
+            placeholder="Ingresa el nombre del personaje"
             required
           />
         </div>
+        <button type="submit" className="btn btn-primary">Buscar Personaje</button>
+      </form>
+      <form onSubmit={handleEpisodeSubmit} className="mt-4">
         <div className="mb-3">
-          <label htmlFor="lastName" className="form-label">Apellido</label>
-          <input
-            type="text"
-            className="form-control"
-            id="lastName"
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="gender" className="form-label">Género</label>
+          <label htmlFor="searchEpisode" className="form-label">Buscar Episodio</label>
           <select
             className="form-select"
-            id="gender"
-            name="gender"
-            value={formData.gender}
-            onChange={handleChange}
+            id="searchEpisode"
+            name="searchEpisode"
+            value={searchEpisode}
+            onChange={handleEpisodeChange}
             required
           >
-            <option value="">Selecciona tu género</option>
-            <option value="Masculino">Masculino</option>
-            <option value="Femenino">Femenino</option>
-            <option value="Otro">Otro</option>
+            <option value="">Selecciona un episodio</option>
+            {episodes.map((episode) => (
+              <option key={episode.id} value={episode.id}>{episode.name}</option>
+            ))}
           </select>
         </div>
-        <div className="mb-3">
-          <label htmlFor="birthDate" className="form-label">Fecha de Nacimiento</label>
-          <input
-            type="date"
-            className="form-control"
-            id="birthDate"
-            name="birthDate"
-            value={formData.birthDate}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <button type="submit" className="btn btn-primary">Guardar</button>
+        <button type="submit" className="btn btn-secondary">Buscar Episodio</button>
       </form>
     </div>
   );

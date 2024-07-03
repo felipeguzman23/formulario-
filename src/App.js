@@ -1,51 +1,106 @@
 import React, { useState } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Form from './form';
-
-function Counter({ count }) {
-  return (
-    <div className="counter">
-      <p>Personas que han llenado el formulario: {count}</p>
-    </div>
-  );
-}
+import CharacterForm from './CharacterForm';
+import EpisodeForm from './EpisodeForm';
+import LocationForm from './LocationForm';
+import CharacterCard from './CharacterCard';
+import LocationCard from './LocationCard';
+import EpisodeCard from './EpisodeCard';
+import axios from 'axios';
+import tituloImage from './titulo.png';
 
 function App() {
-  const [contador, setContador] = useState(0);
-  const [personas, setPersonas] = useState([]);
+  const [characters, setCharacters] = useState([]);
+  const [selectedEpisode, setSelectedEpisode] = useState(null);
+  const [episodeCharacters, setEpisodeCharacters] = useState([]);
+  const [selectedLocation, setSelectedLocation] = useState(null);
+  const [locationCharacters, setLocationCharacters] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [viewMode, setViewMode] = useState('characters');
 
-  const incrementarContador = () => {
-    setContador(contador + 1);
+  const fetchCharacters = async (name) => {
+    setLoading(true);
+    try {
+      const response = await axios.get(`https://rickandmortyapi.com/api/character/?name=${name}`);
+      setCharacters(response.data.results);
+      setViewMode('characters');
+    } catch (error) {
+      console.error('Error fetching characters:', error);
+      setCharacters([]);
+    }
+    setLoading(false);
   };
 
-  const agregarPersona = (datosPersona) => {
-    const nuevaPersona = {
-      id: personas.length + 1,
-      ...datosPersona
-    };
-    setPersonas([...personas, nuevaPersona]);
-    incrementarContador();
+  const fetchEpisodeDetails = async (id) => {
+    setLoading(true);
+    try {
+      const response = await axios.get(`https://rickandmortyapi.com/api/episode/${id}`);
+      setSelectedEpisode(response.data);
+      const characterResponses = await Promise.all(response.data.characters.map(url => axios.get(url)));
+      setEpisodeCharacters(characterResponses.map(res => res.data));
+      setViewMode('episodes');
+    } catch (error) {
+      console.error('Error fetching episode details:', error);
+    }
+    setLoading(false);
+  };
+
+  const fetchLocationDetails = async (id) => {
+    setLoading(true);
+    try {
+      const response = await axios.get(`https://rickandmortyapi.com/api/location/${id}`);
+      setSelectedLocation(response.data);
+      const characterResponses = await Promise.all(response.data.residents.map(url => axios.get(url)));
+      setLocationCharacters(characterResponses.map(res => res.data));
+      setViewMode('locations');
+    } catch (error) {
+      console.error('Error fetching location details:', error);
+    }
+    setLoading(false);
+  };
+
+  const handleSearchCharacter = (term) => {
+    fetchCharacters(term);
+  };
+
+  const handleSearchEpisode = (id) => {
+    fetchEpisodeDetails(id);
+  };
+
+  const handleSearchLocation = (id) => {
+    fetchLocationDetails(id);
   };
 
   return (
     <div className="app">
-      <div className="form-container">
-        <h2 className="mb-4">Formulario de Registro</h2>
-        <Form onFormSubmit={agregarPersona} />
+      <img src={tituloImage} alt="Title" className="title-image" />
+      <div className="form-section">
+        <div className="form-container">
+          <CharacterForm onFormSubmit={handleSearchCharacter} />
+        </div>
+        <div className="form-container">
+          <EpisodeForm onFormSubmit={handleSearchEpisode} />
+        </div>
+        <div className="form-container">
+          <LocationForm onFormSubmit={handleSearchLocation} />
+        </div>
       </div>
-      <Counter count={contador} />
-      {/* Mostrar lista de personas */}
-      <div className="person-list">
-        <h3>Personas que han llenado el formulario:</h3>
-        <ul>
-          {personas.map((persona) => (
-            <li key={persona.id}>
-              Nombre: {persona.firstName} {persona.lastName} - Género: {persona.gender} - Fecha de Nacimiento: {persona.birthDate}
-            </li>
+      {loading && <p>Cargando...</p>}
+      {viewMode === 'characters' && !loading && characters.length > 0 && (
+        <div className="character-list">
+          {characters.map((character) => (
+            <CharacterCard key={character.id} character={character} />
           ))}
-        </ul>
-      </div>
+        </div>
+      )}
+      {viewMode === 'characters' && !loading && characters.length === 0 && <p>No se encontraron personajes.</p>}
+      {viewMode === 'episodes' && selectedEpisode && (
+        <EpisodeCard episode={selectedEpisode} characters={episodeCharacters} />
+      )}
+      {viewMode === 'locations' && selectedLocation && (
+        <LocationCard location={selectedLocation} characters={locationCharacters} />
+      )}
     </div>
   );
 }
