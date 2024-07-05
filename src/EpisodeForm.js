@@ -44,7 +44,7 @@ function EpisodeForm({ onFormSubmit }) {
           ))}
         </select>
       </div>
-      <button type="submit" className="btn btn-secondary">Buscar Episodio</button>
+      <button type="submit" className="btn btn-primary">Buscar Episodio</button>
     </form>
   );
 }

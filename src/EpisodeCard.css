@@ -1,12 +1,40 @@
-.episode-card {
-  background: rgba(44, 62, 80, 0.9);
+.episode-details {
+  color: white;
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 800px;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.episode-info-container {
+  background: #2c3e50;
   padding: 20px;
   border-radius: 10px;
   margin-bottom: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .episode-info {
   text-align: left;
+}
+
+.character-list-container {
+  margin-top: 20px;
+}
+
+.character-list-title-container {
+  background: #2c3e50;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.character-list-title {
+  font-size: 1.5em;
+  font-weight: bold;
+  text-align: center;
 }
 
 .character-list {

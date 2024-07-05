@@ -1,49 +1,48 @@
 .character-card {
-    background: #2c3e50;
-    color: white;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px;
-    max-width: 300px;
-    width: 100%;
-  }
-  
-  .character-image {
-    border-radius: 10px;
-    width: 100%;
-  }
-  
-  .character-info {
-    text-align: left;
-    width: 100%;
-    padding: 10px;
-  }
-  
-  .character-info h3 {
-    margin: 0;
-    font-size: 1.5em;
-  }
-  
-  .character-info p {
-    margin: 5px 0;
-  }
-  
-  .character-status {
-    font-weight: bold;
-  }
-  
-  .character-status.alive {
-    color: #4caf50;
-  }
-  
-  .character-status.dead {
-    color: #f44336;
-  }
-  
-  .character-status.unknown {
-    color: #ffc107;
-  }
-  
+  background: #2c3e50;
+  color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  max-width: 300px;
+  width: 100%;
+}
+
+.character-image {
+  border-radius: 10px;
+  width: 100%;
+}
+
+.character-info {
+  text-align: left;
+  width: 100%;
+  padding: 10px;
+}
+
+.character-info h3 {
+  margin: 0;
+  font-size: 1.5em;
+}
+
+.character-info p {
+  margin: 5px 0;
+}
+
+.character-status {
+  font-weight: bold;
+}
+
+.character-status.alive {
+  color: #4caf50;
+}
+
+.character-status.dead {
+  color: #f44336;
+}
+
+.character-status.unknown {
+  color: #ffc107;
+}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const LocationForm = ({ onFormSubmit }) => {
+function LocationForm({ onFormSubmit }) {
   const [searchLocation, setSearchLocation] = useState('');
   const [locations, setLocations] = useState([]);
 
@@ -44,9 +44,9 @@ const LocationForm = ({ onFormSubmit }) => {
           ))}
         </select>
       </div>
-      <button type="submit" className="btn btn-secondary">Buscar Ubicación</button>
+      <button type="submit" className="btn btn-primary">Buscar Ubicación</button>
     </form>
   );
-};
+}
 
 export default LocationForm;

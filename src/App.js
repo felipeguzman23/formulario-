@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CharacterForm from './CharacterForm';
@@ -9,6 +9,9 @@ import LocationCard from './LocationCard';
 import EpisodeCard from './EpisodeCard';
 import axios from 'axios';
 import tituloImage from './titulo.png';
+import backgroundMusic from './intro.mp3';
+import cornerGif from './corner-gif.gif';
+import leftCornerGif from './gif2.gif.gif';
 
 function App() {
   const [characters, setCharacters] = useState([]);
@@ -18,6 +21,18 @@ function App() {
   const [locationCharacters, setLocationCharacters] = useState([]);
   const [loading, setLoading] = useState(false);
   const [viewMode, setViewMode] = useState('characters');
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const audioRef = useRef(new Audio(backgroundMusic));
+
+  const toggleMusic = () => {
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
 
   const fetchCharacters = async (name) => {
     setLoading(true);
@@ -74,7 +89,12 @@ function App() {
 
   return (
     <div className="app">
-      <img src={tituloImage} alt="Title" className="title-image" />
+      <div className="title-image">
+        <img src={tituloImage} alt="Título de la aplicación" />
+      </div>
+      <button className="music-toggle-btn" onClick={toggleMusic}>
+        {isPlaying ? 'Pausar Música' : 'Reproducir Música'}
+      </button>
       <div className="form-section">
         <div className="form-container">
           <CharacterForm onFormSubmit={handleSearchCharacter} />
@@ -101,6 +121,8 @@ function App() {
       {viewMode === 'locations' && selectedLocation && (
         <LocationCard location={selectedLocation} characters={locationCharacters} />
       )}
+      <img src={cornerGif} alt="GIF animado" className="corner-gif" />
+      <img src={leftCornerGif} alt="GIF animado" className="left-corner-gif" />
     </div>
   );
 }
