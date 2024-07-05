@@ -10,8 +10,6 @@ import EpisodeCard from './EpisodeCard';
 import axios from 'axios';
 import tituloImage from './titulo.png';
 import backgroundMusic from './intro.mp3';
-import cornerGif from './corner-gif.gif';
-import leftCornerGif from './gif2.gif.gif';
 
 function App() {
   const [characters, setCharacters] = useState([]);
@@ -21,6 +19,7 @@ function App() {
   const [locationCharacters, setLocationCharacters] = useState([]);
   const [loading, setLoading] = useState(false);
   const [viewMode, setViewMode] = useState('characters');
+  const [selectedCharacter, setSelectedCharacter] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
   const audioRef = useRef(new Audio(backgroundMusic));
@@ -87,6 +86,14 @@ function App() {
     fetchLocationDetails(id);
   };
 
+  const handleCharacterClick = (character) => {
+    setSelectedCharacter(character);
+  };
+
+  const handleBackToList = () => {
+    setSelectedCharacter(null);
+  };
+
   return (
     <div className="app">
       <div className="title-image">
@@ -96,33 +103,42 @@ function App() {
         {isPlaying ? 'Pausar Música' : 'Reproducir Música'}
       </button>
       <div className="form-section">
-        <div className="form-container">
+        <div className="form-container animated-container">
           <CharacterForm onFormSubmit={handleSearchCharacter} />
         </div>
-        <div className="form-container">
+        <div className="form-container animated-container">
           <EpisodeForm onFormSubmit={handleSearchEpisode} />
         </div>
-        <div className="form-container">
+        <div className="form-container animated-container">
           <LocationForm onFormSubmit={handleSearchLocation} />
         </div>
       </div>
       {loading && <p>Cargando...</p>}
-      {viewMode === 'characters' && !loading && characters.length > 0 && (
-        <div className="character-list">
-          {characters.map((character) => (
-            <CharacterCard key={character.id} character={character} />
-          ))}
+      {selectedCharacter ? (
+        <div className="character-details">
+          <button onClick={handleBackToList} className="btn btn-secondary mb-3">Volver</button>
+          <CharacterCard character={selectedCharacter} />
         </div>
+      ) : (
+        <>
+          {viewMode === 'characters' && !loading && characters.length > 0 && (
+            <div className="character-list">
+              {characters.map((character) => (
+                <div key={character.id} onClick={() => handleCharacterClick(character)}>
+                  <CharacterCard character={character} />
+                </div>
+              ))}
+            </div>
+          )}
+          {viewMode === 'characters' && !loading && characters.length === 0 && <p>No se encontraron personajes.</p>}
+          {viewMode === 'episodes' && selectedEpisode && (
+            <EpisodeCard episode={selectedEpisode} characters={episodeCharacters} />
+          )}
+          {viewMode === 'locations' && selectedLocation && (
+            <LocationCard location={selectedLocation} characters={locationCharacters} />
+          )}
+        </>
       )}
-      {viewMode === 'characters' && !loading && characters.length === 0 && <p>No se encontraron personajes.</p>}
-      {viewMode === 'episodes' && selectedEpisode && (
-        <EpisodeCard episode={selectedEpisode} characters={episodeCharacters} />
-      )}
-      {viewMode === 'locations' && selectedLocation && (
-        <LocationCard location={selectedLocation} characters={locationCharacters} />
-      )}
-      <img src={cornerGif} alt="GIF animado" className="corner-gif" />
-      <img src={leftCornerGif} alt="GIF animado" className="left-corner-gif" />
     </div>
   );
 }

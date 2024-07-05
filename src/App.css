@@ -21,15 +21,32 @@ body {
 
 .title-image {
   width: 100%;
-  max-width: 600px; /* Ajusta el tamaño según sea necesario */
+  max-width: 900px; /* Ajusta el tamaño según sea necesario */
   margin-bottom: 20px;
   display: flex;
   justify-content: center;
+  animation: fadeIn 2s ease-in-out, slideIn 1s ease-out;
 }
 
 .title-image img {
   width: 100%;
   max-width: 100%;
+}
+
+/* Añadir animaciones */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateY(-50px); }
+  to { transform: translateY(0); }
+}
+
+/* Aplicar las mismas animaciones a los contenedores de formulario */
+.animated-container {
+  animation: fadeIn 2s ease-in-out, slideIn 1s ease-out;
 }
 
 .music-toggle-btn {
@@ -69,24 +86,6 @@ body {
   background-clip: padding-box;
 }
 
-.corner-gif {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  width: 150px; /* Ajusta el tamaño según sea necesario */
-  height: auto;
-  z-index: 1000; /* Asegura que el GIF esté por encima de otros elementos */
-}
-
-.left-corner-gif {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  width: 150px; /* Ajusta el tamaño según sea necesario */
-  height: auto;
-  z-index: 1000; /* Asegura que el GIF esté por encima de otros elementos */
-}
-
 /* Negritas para los labels */
 .form-label {
   font-weight: bold;
@@ -103,6 +102,34 @@ body {
 
 .form-control::placeholder, .form-select::placeholder {
   color: rgba(255, 255, 255, 0.7);
+}
+
+/* Estilos para las tarjetas de personajes */
+.character-card {
+  background: #2c3e50;
+  color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  max-width: 300px;
+  width: 100%;
+  transition: transform 0.3s ease, z-index 0.3s ease;
+}
+
+.character-card:hover {
+  transform: scale(1.2);
+  z-index: 10; /* Asegura que la tarjeta esté por encima de otras tarjetas al hacer hover */
+}
+
+/* Estilos para la lista de personajes */
+.character-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
 }
 
 /* Media Queries */
