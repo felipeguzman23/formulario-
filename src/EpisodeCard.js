@@ -1,8 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './EpisodeCard.css';
 import CharacterCard from './CharacterCard';
 
-const EpisodeCard = ({ episode, characters }) => {
+const EpisodeCard = ({ episode }) => {
+  const [characters, setCharacters] = useState([]);
+
+  useEffect(() => {
+    const fetchCharacters = async () => {
+      try {
+        const characterPromises = episode.characters.map(url =>
+          fetch(url).then(response => response.json())
+        );
+        const characterData = await Promise.all(characterPromises);
+        setCharacters(characterData);
+      } catch (error) {
+        console.error('Error fetching characters:', error);
+      }
+    };
+
+    fetchCharacters();
+  }, [episode.characters]);
+
   return (
     <div className="episode-details">
       <div className="episode-info-container">

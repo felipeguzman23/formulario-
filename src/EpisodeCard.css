@@ -1,45 +1,39 @@
+/* EpisodeCard.css */
 .episode-details {
-  color: white;
+  border: 1px solid #ccc;
   border-radius: 10px;
-  padding: 20px;
-  max-width: 800px;
+  padding: 10px;
+  margin: 10px;
+  text-align: center;
   width: 100%;
-  margin-top: 20px;
+  background-color: #141414; /* Fondo oscuro */
+  color: #0ff; /* Texto en color cian */
 }
 
 .episode-info-container {
-  background: #2c3e50;
-  padding: 20px;
-  border-radius: 10px;
   margin-bottom: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.episode-info {
-  text-align: left;
+.episode-info h3 {
+  margin: 10px 0;
+  color: #0ff; /* Título en color cian */
+}
+
+.episode-info p {
+  margin: 5px 0;
+  color: #0ff; /* Texto en color cian */
 }
 
 .character-list-container {
   margin-top: 20px;
 }
 
-.character-list-title-container {
-  background: #2c3e50;
-  padding: 10px;
-  border-radius: 10px;
-  margin-bottom: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.character-list-title {
-  font-size: 1.5em;
-  font-weight: bold;
-  text-align: center;
+.character-list-title-container p {
+  color: #0ff; /* Título de la lista de personajes en color cian */
 }
 
 .character-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
   justify-content: center;
 }

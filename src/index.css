@@ -5,7 +5,7 @@ body {
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: url('https://media.istockphoto.com/id/1162692500/es/foto/carretera-urbana.jpg?s=2048x2048&w=is&k=20&c=up-dlE_JqMqPXk_KGHKZWLSpbLb-sAVhQN6xUADAXjk='); /* Ruta relativa a la imagen en tu proyecto */
+  background-image: url('https://motionbgs.com/media/776/multiverse-of-rick-and-morty.960x540.mp4'); /* Ruta relativa a la imagen en tu proyecto */
   background-size: cover; /* Cubrir toda el área del cuerpo */
   background-position: center; /* Centrar la imagen */
   background-repeat: no-repeat; /* No repetir la imagen */

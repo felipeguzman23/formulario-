@@ -1,61 +1,34 @@
+/* CharacterCard.css */
 .character-card {
-  background: #2c3e50;
-  color: white;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px;
-  max-width: 300px;
-  width: 100%;
-  transition: transform 0.3s ease, z-index 0.3s ease;
+  border: 1px solid #00f5ff;
+  border-radius: 15px;
+  padding: 20px;
+  margin: 20px;
+  text-align: center;
+  width: 250px;
+  background: linear-gradient(145deg, #0e0e0e, #2a2a2a);
+  color: #00f5ff;
+  box-shadow: 0 10px 20px rgba(0, 245, 255, 0.5), 0 6px 6px rgba(0, 245, 255, 0.3);
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .character-card:hover {
-  transform: scale(1.2);
-  z-index: 10; /* Asegura que la tarjeta esté por encima de otras tarjetas al hacer hover */
-}
-
-.character-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
+  transform: scale(1.05);
+  box-shadow: 0 20px 40px rgba(0, 245, 255, 0.6), 0 10px 10px rgba(0, 245, 255, 0.4);
 }
 
 .character-image {
+  width: 100%;
   border-radius: 10px;
-  width: 100%;
+  margin-bottom: 10px;
 }
 
-.character-info {
-  text-align: left;
-  width: 100%;
-  padding: 10px;
+.character-card h3 {
+  margin: 10px 0;
+  color: #00f5ff;
 }
 
-.character-info h3 {
-  margin: 0;
-  font-size: 1.5em;
-}
-
-.character-info p {
+.character-card p {
   margin: 5px 0;
-}
-
-.character-status {
-  font-weight: bold;
-}
-
-.character-status.alive {
-  color: #4caf50;
-}
-
-.character-status.dead {
-  color: #f44336;
-}
-
-.character-status.unknown {
-  color: #ffc107;
+  color: #00f5ff;
 }

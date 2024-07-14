@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CharacterForm from './CharacterForm';
@@ -7,6 +7,8 @@ import LocationForm from './LocationForm';
 import CharacterCard from './CharacterCard';
 import LocationCard from './LocationCard';
 import EpisodeCard from './EpisodeCard';
+import Navbar from './Navbar'; // Importa el componente Navbar
+import Footer from './Footer'; // Importa el componente Footer
 import axios from 'axios';
 import tituloImage from './titulo.png';
 import backgroundMusic from './intro.mp3';
@@ -21,6 +23,7 @@ function App() {
   const [viewMode, setViewMode] = useState('characters');
   const [selectedCharacter, setSelectedCharacter] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [footerVisible, setFooterVisible] = useState(false);
 
   const audioRef = useRef(new Audio(backgroundMusic));
 
@@ -94,51 +97,68 @@ function App() {
     setSelectedCharacter(null);
   };
 
+  const handleScroll = () => {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+      setFooterVisible(true);
+    } else {
+      setFooterVisible(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <div className="app">
-      <div className="title-image">
-        <img src={tituloImage} alt="Título de la aplicación" />
+      <Navbar /> {/* Usa el componente Navbar */}
+      <div className="content">
+        <div className="title-image">
+          <img src={tituloImage} alt="Título de la aplicación" />
+        </div>
+        <button className="music-toggle-btn" onClick={toggleMusic}>
+          {isPlaying ? 'Pausar Música' : 'Reproducir Música'}
+        </button>
+        <div className="form-section">
+          <div className="form-container animated-container">
+            <CharacterForm onFormSubmit={handleSearchCharacter} />
+          </div>
+          <div className="form-container animated-container">
+            <EpisodeForm onFormSubmit={handleSearchEpisode} />
+          </div>
+          <div className="form-container animated-container">
+            <LocationForm onFormSubmit={handleSearchLocation} />
+          </div>
+        </div>
+        {loading && <p>Cargando...</p>}
+        {selectedCharacter ? (
+          <div className="character-details">
+            <button onClick={handleBackToList} className="btn btn-secondary mb-3">Volver</button>
+            <CharacterCard character={selectedCharacter} />
+          </div>
+        ) : (
+          <>
+            {viewMode === 'characters' && !loading && characters.length > 0 && (
+              <div className="character-list">
+                {characters.map((character) => (
+                  <div key={character.id} onClick={() => handleCharacterClick(character)}>
+                    <CharacterCard character={character} />
+                  </div>
+                ))}
+              </div>
+            )}
+            {viewMode === 'characters' && !loading && characters.length === 0 && <p>No se encontraron personajes.</p>}
+            {viewMode === 'episodes' && selectedEpisode && (
+              <EpisodeCard episode={selectedEpisode} characters={episodeCharacters} />
+            )}
+            {viewMode === 'locations' && selectedLocation && (
+              <LocationCard location={selectedLocation} characters={locationCharacters} />
+            )}
+          </>
+        )}
       </div>
-      <button className="music-toggle-btn" onClick={toggleMusic}>
-        {isPlaying ? 'Pausar Música' : 'Reproducir Música'}
-      </button>
-      <div className="form-section">
-        <div className="form-container animated-container">
-          <CharacterForm onFormSubmit={handleSearchCharacter} />
-        </div>
-        <div className="form-container animated-container">
-          <EpisodeForm onFormSubmit={handleSearchEpisode} />
-        </div>
-        <div className="form-container animated-container">
-          <LocationForm onFormSubmit={handleSearchLocation} />
-        </div>
-      </div>
-      {loading && <p>Cargando...</p>}
-      {selectedCharacter ? (
-        <div className="character-details">
-          <button onClick={handleBackToList} className="btn btn-secondary mb-3">Volver</button>
-          <CharacterCard character={selectedCharacter} />
-        </div>
-      ) : (
-        <>
-          {viewMode === 'characters' && !loading && characters.length > 0 && (
-            <div className="character-list">
-              {characters.map((character) => (
-                <div key={character.id} onClick={() => handleCharacterClick(character)}>
-                  <CharacterCard character={character} />
-                </div>
-              ))}
-            </div>
-          )}
-          {viewMode === 'characters' && !loading && characters.length === 0 && <p>No se encontraron personajes.</p>}
-          {viewMode === 'episodes' && selectedEpisode && (
-            <EpisodeCard episode={selectedEpisode} characters={episodeCharacters} />
-          )}
-          {viewMode === 'locations' && selectedLocation && (
-            <LocationCard location={selectedLocation} characters={locationCharacters} />
-          )}
-        </>
-      )}
+      <Footer isVisible={footerVisible} /> {/* Usa el componente Footer */}
     </div>
   );
 }

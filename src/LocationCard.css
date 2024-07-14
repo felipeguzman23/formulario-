@@ -1,45 +1,37 @@
+/* LocationCard.css */
 .location-details {
-  color: white;
+  border: 1px solid #ccc;
   border-radius: 10px;
-  padding: 20px;
-  max-width: 800px;
+  padding: 10px;
+  margin: 10px;
+  text-align: center;
   width: 100%;
-  margin-top: 20px;
+  background-color: #141414; /* Asegúrate de que el fondo sea oscuro si el texto es claro */
+  color: #0ff; /* Cambia este valor para el color del texto */
 }
 
 .location-info-container {
-  background: #2c3e50;
-  padding: 20px;
-  border-radius: 10px;
   margin-bottom: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.location-info {
-  text-align: left;
+.location-info h3 {
+  margin: 10px 0;
 }
 
-.character-list-container {
+.location-info p {
+  margin: 5px 0;
+}
+
+.resident-list-container {
   margin-top: 20px;
 }
 
-.character-list-title-container {
-  background: #2c3e50;
-  padding: 10px;
-  border-radius: 5px;
-  margin-bottom: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.resident-list-title-container p {
+  color: #0ff; /* Cambia este valor para el color del título de la lista de residentes */
 }
 
-.character-list-title {
-  font-size: 1.5em;
-  font-weight: bold;
-  text-align: center;
-}
-
-.character-list {
+.resident-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
   justify-content: center;
 }

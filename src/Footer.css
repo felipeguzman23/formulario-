@@ -1,0 +1,30 @@
+/* Footer.css */
+.footer {
+  width: 100%;
+  background-color: #141414;
+  color: #0ff;
+  text-align: center;
+  padding: 10px 0;
+  box-shadow: 0 -2px 5px rgba(0, 255, 255, 0.5);
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.footer.visible {
+  opacity: 1;
+}
+
+.footer p {
+  margin: 0;
+  font-size: 1em;
+}
+
+.footer-stats {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+  font-size: 1em;
+}
